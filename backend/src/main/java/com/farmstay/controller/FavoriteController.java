@@ -32,7 +32,7 @@ public class FavoriteController {
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size) {
         Long userId = SecurityUtil.getCurrentUserId();
-        return Result.success(favoriteService.listByUserId(userId, page, size));
+        return Result.success(favoriteService.listFarmhousesByUserId(userId, page, size));
     }
 
     @GetMapping("/check/{farmhouseId}")

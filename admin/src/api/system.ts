@@ -51,3 +51,8 @@ export const getMenuList = (data?: object) => {
 export const getDeptList = (data?: object) => {
   return http.request<Result>("post", "/dept", { data });
 };
+
+/** 获取用户角色ID列表 */
+export const getRoleIds = (data?: object) => {
+  return http.request<Result>("post", "/role-ids", { data });
+};

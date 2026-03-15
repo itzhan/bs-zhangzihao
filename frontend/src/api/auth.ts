@@ -14,5 +14,5 @@ export function register(data: {
 }
 
 export function getUserInfo() {
-  return request.get('/api/user/info')
+  return request.get('/api/auth/info')
 }

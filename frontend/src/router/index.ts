@@ -5,7 +5,13 @@ import { getToken } from '@/utils/auth'
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: '/farmhouses'
+    name: 'Home',
+    component: () => import('@/views/Home.vue'),
+    meta: { title: '首页' }
+  },
+  {
+    path: '/farmhouses',
+    redirect: '/'
   },
   {
     path: '/login',
@@ -18,12 +24,6 @@ const routes: RouteRecordRaw[] = [
     name: 'Register',
     component: () => import('@/views/Register.vue'),
     meta: { title: '注册' }
-  },
-  {
-    path: '/farmhouses',
-    name: 'Farmhouses',
-    component: () => import('@/views/Home.vue'),
-    meta: { title: '首页' }
   },
   {
     path: '/farmhouse/:id',

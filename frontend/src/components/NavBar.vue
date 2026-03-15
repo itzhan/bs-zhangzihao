@@ -24,7 +24,6 @@ const unreadCount = ref(0)
 
 const navLinks = [
   { label: '首页', path: '/', key: 'home' },
-  { label: '农家乐', path: '/farmhouses', key: 'farmhouse' },
   { label: '公告', path: '/announcements', key: 'announcement' }
 ]
 
@@ -41,12 +40,11 @@ const dropdownOptions = [
 function isActive(link: typeof navLinks[number]) {
   const p = route.path
   if (link.key === 'home') {
-    // 首页：仅当精确在 /farmhouses 列表页时高亮
-    return p === '/' || p === '/farmhouses'
+    return p === '/'
   }
   if (link.key === 'farmhouse') {
-    // 农家乐：在详情/套餐等子页面时高亮，但在列表页不高亮（避免与首页重叠）
-    return p.startsWith('/farmhouse/') 
+    // 农家乐详情和套餐页面高亮
+    return p.startsWith('/farmhouse/')
   }
   // 其他：前缀匹配
   return p === link.path || p.startsWith(link.path + '/')
@@ -81,7 +79,7 @@ onMounted(() => {
   <header class="navbar">
     <div class="navbar-inner container">
       <!-- Logo -->
-      <div class="navbar-logo" @click="router.push('/farmhouses')">
+      <div class="navbar-logo" @click="router.push('/')">
         <NIcon :size="28" color="#5B8C5A">
           <LeafOutline />
         </NIcon>

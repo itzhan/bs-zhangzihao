@@ -12,7 +12,7 @@ export function create(data: {
 }
 
 export function getMyList(page: number, size: number, status?: number) {
-  return request.get('/api/orders/my', { params: { page, size, status } })
+  return request.get('/api/orders', { params: { page, size, status } })
 }
 
 export function getDetail(id: number) {

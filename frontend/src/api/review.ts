@@ -11,5 +11,5 @@ export function create(data: {
 }
 
 export function getByFarmhouse(farmhouseId: number, page: number, size: number) {
-  return request.get(`/api/reviews/farmhouse/${farmhouseId}`, { params: { page, size } })
+  return request.get(`/api/reviews/public/farmhouse/${farmhouseId}`, { params: { page, size } })
 }

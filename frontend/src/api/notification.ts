@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 export function getMyList(page: number, size: number) {
-  return request.get('/api/notifications/my', { params: { page, size } })
+  return request.get('/api/notifications', { params: { page, size } })
 }
 
 export function markRead(id: number) {

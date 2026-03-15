@@ -31,13 +31,18 @@ const passwordForm = ref({
 const saving = ref(false)
 const changingPassword = ref(false)
 
-function loadProfile() {
+async function loadProfile() {
+  try {
+    await userStore.fetchUserInfo()
+  } catch {
+    // fall back to cached data
+  }
   if (userStore.user) {
     formData.value = {
       nickname: userStore.user.nickname || '',
       phone: userStore.user.phone || '',
       email: userStore.user.email || '',
-      gender: userStore.user.gender || 0,
+      gender: userStore.user.gender ?? 0,
       avatar: userStore.user.avatar || ''
     }
   }
@@ -50,7 +55,7 @@ async function handleSave() {
   }
   saving.value = true
   try {
-    const res = await request.put('/api/user/profile', formData.value) as unknown as ApiResult
+    const res = await request.put('/api/users/me', formData.value) as unknown as ApiResult
     if (res.code === 200) {
       message.success('保存成功')
       await userStore.fetchUserInfo()
@@ -75,7 +80,7 @@ async function handleChangePassword() {
   }
   changingPassword.value = true
   try {
-    const res = await request.put('/api/user/password', {
+    const res = await request.put('/api/users/me/password', {
       oldPassword: passwordForm.value.oldPassword,
       newPassword: passwordForm.value.newPassword
     }) as unknown as ApiResult

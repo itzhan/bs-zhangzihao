@@ -9,7 +9,7 @@ export function remove(farmhouseId: number) {
 }
 
 export function getMyList(page: number, size: number) {
-  return request.get('/api/favorites/my', { params: { page, size } })
+  return request.get('/api/favorites', { params: { page, size } })
 }
 
 export function check(farmhouseId: number) {

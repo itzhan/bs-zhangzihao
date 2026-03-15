@@ -2,6 +2,7 @@ package com.farmstay.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.farmstay.common.PageResult;
+import com.farmstay.entity.Farmhouse;
 import com.farmstay.entity.Favorite;
 
 public interface FavoriteService extends IService<Favorite> {
@@ -11,6 +12,8 @@ public interface FavoriteService extends IService<Favorite> {
     void remove(Long userId, Long farmhouseId);
 
     PageResult<Favorite> listByUserId(Long userId, int page, int size);
+
+    PageResult<Farmhouse> listFarmhousesByUserId(Long userId, int page, int size);
 
     boolean isFavorited(Long userId, Long farmhouseId);
 }

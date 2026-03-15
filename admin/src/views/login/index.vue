@@ -10,6 +10,10 @@ import { debounce } from "@pureadmin/utils";
 
 import Lock from "~icons/ri/lock-fill";
 import User from "~icons/ri/user-3-fill";
+import IconLeaf from "~icons/lucide/leaf";
+import IconMapPin from "~icons/lucide/map-pin";
+import IconStar from "~icons/lucide/star";
+import IconShield from "~icons/lucide/shield-check";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 
 defineOptions({
@@ -34,6 +38,12 @@ const loginRules = {
     { required: true, message: "请输入密码", trigger: "blur" }
   ]
 };
+
+const features = [
+  { icon: IconMapPin, text: "覆盖河南10+优质农家乐" },
+  { icon: IconStar, text: "在线预约 · 轻松管理" },
+  { icon: IconShield, text: "安全可靠 · 数据保障" }
+];
 
 const onLogin = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
@@ -83,83 +93,83 @@ useEventListener(document, "keydown", ({ code }) => {
   <div class="farmstay-login">
     <!-- 全屏背景 -->
     <div class="farmstay-login__bg"></div>
-    <!-- 半透明遮罩，增加文字可读性 -->
+    <!-- 半透明遮罩 -->
     <div class="farmstay-login__overlay"></div>
 
-    <!-- 登录卡片 -->
-    <div class="farmstay-login__card">
-      <!-- Logo & 标题 -->
-      <div class="farmstay-login__header">
-        <div class="farmstay-login__icon">
-          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="48" fill="#2d5016" opacity="0.1"/>
-            <path d="M50 15 L20 45 L30 45 L30 75 L70 75 L70 45 L80 45 Z" fill="#2d5016" opacity="0.8"/>
-            <rect x="42" y="55" width="16" height="20" rx="2" fill="#8B4513" opacity="0.9"/>
-            <rect x="36" y="35" width="10" height="10" rx="1" fill="#87CEEB" opacity="0.7"/>
-            <rect x="54" y="35" width="10" height="10" rx="1" fill="#87CEEB" opacity="0.7"/>
-            <ellipse cx="25" cy="72" rx="12" ry="8" fill="#228B22" opacity="0.5"/>
-            <ellipse cx="75" cy="72" rx="12" ry="8" fill="#228B22" opacity="0.5"/>
-            <ellipse cx="20" cy="68" rx="8" ry="6" fill="#32CD32" opacity="0.4"/>
-            <ellipse cx="80" cy="68" rx="8" ry="6" fill="#32CD32" opacity="0.4"/>
-          </svg>
+    <!-- 主内容：左右布局 -->
+    <div class="farmstay-login__main">
+      <!-- 左侧品牌区 -->
+      <div class="farmstay-login__brand">
+        <div class="brand-content">
+          <div class="brand-logo">
+            <component :is="IconLeaf" class="brand-logo-icon" />
+          </div>
+          <h1 class="brand-title">农家乐预约管理系统</h1>
+          <p class="brand-subtitle">发现河南最美农家乐 · 享受田园慢生活</p>
+          <div class="brand-features">
+            <div v-for="(f, i) in features" :key="i" class="brand-feature">
+              <component :is="f.icon" class="brand-feature-icon" />
+              <span>{{ f.text }}</span>
+            </div>
+          </div>
         </div>
-        <h1 class="farmstay-login__title">农家乐预约管理系统</h1>
-        <p class="farmstay-login__subtitle">管理后台</p>
       </div>
 
-      <!-- 分割线 -->
-      <div class="farmstay-login__divider"></div>
+      <!-- 右侧登录卡片 -->
+      <div class="farmstay-login__card">
+        <div class="farmstay-login__header">
+          <h2 class="farmstay-login__title">管理后台</h2>
+          <p class="farmstay-login__desc">请输入您的管理员账号登录系统</p>
+        </div>
 
-      <!-- 表单 -->
-      <el-form
-        ref="ruleFormRef"
-        :model="ruleForm"
-        :rules="loginRules"
-        size="large"
-        class="farmstay-login__form"
-      >
-        <el-form-item prop="username">
-          <el-input
-            v-model="ruleForm.username"
-            clearable
-            placeholder="请输入用户名"
-            :prefix-icon="useRenderIcon(User)"
-          />
-        </el-form-item>
+        <!-- 分割线 -->
+        <div class="farmstay-login__divider"></div>
 
-        <el-form-item prop="password">
-          <el-input
-            v-model="ruleForm.password"
-            clearable
-            show-password
-            placeholder="请输入密码"
-            :prefix-icon="useRenderIcon(Lock)"
-          />
-        </el-form-item>
+        <!-- 表单 -->
+        <el-form
+          ref="ruleFormRef"
+          :model="ruleForm"
+          :rules="loginRules"
+          size="large"
+          class="farmstay-login__form"
+        >
+          <el-form-item prop="username">
+            <el-input
+              v-model="ruleForm.username"
+              clearable
+              placeholder="请输入用户名"
+              :prefix-icon="useRenderIcon(User)"
+            />
+          </el-form-item>
 
-        <el-form-item>
-          <el-button
-            class="farmstay-login__btn"
-            type="primary"
-            size="large"
-            :loading="loading"
-            :disabled="disabled"
-            @click="onLogin(ruleFormRef)"
-          >
-            登 录
-          </el-button>
-        </el-form-item>
-      </el-form>
+          <el-form-item prop="password">
+            <el-input
+              v-model="ruleForm.password"
+              clearable
+              show-password
+              placeholder="请输入密码"
+              :prefix-icon="useRenderIcon(Lock)"
+            />
+          </el-form-item>
 
-      <!-- 底部装饰文字 -->
-      <p class="farmstay-login__footer">
-        发现河南最美农家乐 · 享受田园慢生活
-      </p>
-    </div>
+          <el-form-item>
+            <el-button
+              class="farmstay-login__btn"
+              type="primary"
+              size="large"
+              :loading="loading"
+              :disabled="disabled"
+              @click="onLogin(ruleFormRef)"
+            >
+              登 录
+            </el-button>
+          </el-form-item>
+        </el-form>
 
-    <!-- 页脚 -->
-    <div class="farmstay-login__copyright">
-      © 2026 农家乐线上预约管理系统
+        <p class="farmstay-login__footer">
+          © 2026 农家乐线上预约管理系统
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -196,28 +206,25 @@ useEventListener(document, "keydown", ({ code }) => {
   inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(0, 0, 0, 0.35) 0%,
-    rgba(0, 0, 0, 0.15) 50%,
-    rgba(0, 0, 0, 0.4) 100%
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.2) 40%,
+    rgba(0, 0, 0, 0.45) 100%
   );
   z-index: 1;
 }
 
-/* 登录卡片 - 玻璃拟态 */
-.farmstay-login__card {
+/* 主内容 */
+.farmstay-login__main {
   position: relative;
   z-index: 2;
-  width: 420px;
-  padding: 48px 40px 36px;
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(24px) saturate(1.6);
-  -webkit-backdrop-filter: blur(24px) saturate(1.6);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.15),
-    0 8px 20px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: stretch;
+  max-width: 880px;
+  width: 90vw;
+  min-height: 520px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
   animation: cardIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
@@ -232,52 +239,128 @@ useEventListener(document, "keydown", ({ code }) => {
   }
 }
 
-/* Logo图标 */
-.farmstay-login__icon {
-  width: 72px;
-  height: 72px;
-  margin: 0 auto 16px;
-  background: linear-gradient(135deg, #2d5016 0%, #4a8c2a 100%);
-  border-radius: 18px;
+/* 左侧品牌区 */
+.farmstay-login__brand {
+  width: 400px;
+  flex-shrink: 0;
+  background: linear-gradient(160deg, #1a3a0a 0%, #2d5016 40%, #4a8c2a 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 24px rgba(45, 80, 22, 0.3);
+  padding: 48px 40px;
+  position: relative;
+  overflow: hidden;
 }
 
-.farmstay-login__icon svg {
-  width: 44px;
-  height: 44px;
+.farmstay-login__brand::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 220px;
+  height: 220px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 50%;
 }
 
-.farmstay-login__icon svg path,
-.farmstay-login__icon svg rect,
-.farmstay-login__icon svg ellipse,
-.farmstay-login__icon svg circle {
-  fill: white;
+.farmstay-login__brand::after {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+  left: -40px;
+  width: 160px;
+  height: 160px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 50%;
+}
+
+.brand-content {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+}
+
+.brand-logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.brand-logo-icon {
+  width: 32px;
+  height: 32px;
+  color: #90ee90;
+}
+
+.brand-title {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  line-height: 1.3;
+}
+
+.brand-subtitle {
+  font-size: 14px;
+  margin: 0 0 36px;
+  opacity: 0.7;
+  line-height: 1.5;
+}
+
+.brand-features {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.brand-feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.brand-feature-icon {
+  width: 18px;
+  height: 18px;
   opacity: 0.9;
+  flex-shrink: 0;
+}
+
+/* 右侧登录卡片 */
+.farmstay-login__card {
+  flex: 1;
+  padding: 48px 40px 36px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(24px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* 标题 */
 .farmstay-login__header {
-  text-align: center;
   margin-bottom: 8px;
 }
 
 .farmstay-login__title {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 700;
   color: #1a1a1a;
-  margin: 0 0 4px;
-  letter-spacing: 2px;
+  margin: 0 0 8px;
 }
 
-.farmstay-login__subtitle {
+.farmstay-login__desc {
   font-size: 14px;
   color: #888;
   margin: 0;
-  font-weight: 400;
-  letter-spacing: 4px;
 }
 
 /* 分割线 */
@@ -286,13 +369,11 @@ useEventListener(document, "keydown", ({ code }) => {
   margin: 24px 0 28px;
   background: linear-gradient(
     90deg,
-    transparent 0%,
-    #2d5016 20%,
-    #4a8c2a 50%,
-    #2d5016 80%,
+    #2d5016 0%,
+    #4a8c2a 30%,
     transparent 100%
   );
-  opacity: 0.3;
+  opacity: 0.2;
   border-radius: 1px;
 }
 
@@ -349,37 +430,27 @@ useEventListener(document, "keydown", ({ code }) => {
   box-shadow: 0 4px 12px rgba(45, 80, 22, 0.3);
 }
 
-/* 底部装饰文字 */
+/* 底部文字 */
 .farmstay-login__footer {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 24px;
   font-size: 12px;
-  color: #999;
-  letter-spacing: 1px;
-}
-
-/* 版权 */
-.farmstay-login__copyright {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  color: #bbb;
 }
 
 /* 响应式 */
-@media screen and (max-width: 480px) {
-  .farmstay-login__card {
-    width: 92vw;
-    padding: 36px 24px 28px;
-    border-radius: 16px;
+@media screen and (max-width: 768px) {
+  .farmstay-login__brand {
+    display: none;
   }
 
-  .farmstay-login__title {
-    font-size: 20px;
+  .farmstay-login__main {
+    max-width: 420px;
+  }
+
+  .farmstay-login__card {
+    border-radius: 24px;
+    padding: 36px 24px 28px;
   }
 }
 </style>

@@ -45,3 +45,13 @@ export const getLogin = (data?: object) => {
 export const refreshTokenApi = (data?: object) => {
   return http.request<UserResult>("post", "/api/auth/login", { data });
 };
+
+/** 获取当前登录用户信息 */
+export const getMine = () => {
+  return http.request<UserInfoResult>("get", "/api/auth/info");
+};
+
+/** 获取当前用户安全日志 */
+export const getMineLogs = (params?: object) => {
+  return http.request("get", "/api/admin/audit-logs", { params });
+};
